@@ -1,10 +1,9 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import "./commentView.css";
-import listJson from "./data.json";
+// import listJson from "./data.json";
 
 const CommentComponentView = props => {
-  console.log("feedbacklist>>>>>", props.feedbacklist);
   const filteredList = props.feedbacklist.filter(item => {
     return (
       item.message.toLowerCase().indexOf(props.searchItem.toLowerCase()) !== -1
@@ -99,7 +98,13 @@ const CommentComponentView = props => {
                               background: "none",
                               outline: "none"
                             }}
-                            onClick={e => props.changeFeed("feedBackType", key)}
+                            onClick={e =>
+                              props.changeFeed(
+                                "feedBackType",
+                                { data: item.feedBackType },
+                                key
+                              )
+                            }
                           >
                             <option value={item.feedBackType}>
                               {item.feedBackType}
@@ -116,7 +121,13 @@ const CommentComponentView = props => {
                               background: "none",
                               outline: "none"
                             }}
-                            onClick={e => props.changeFeed("feedBackType", key)}
+                            onClick={e =>
+                              props.changeFeed(
+                                "feedBackType",
+                                { data: item.feedBackType },
+                                key
+                              )
+                            }
                           >
                             <option value={item.feedBackType}>
                               {item.feedBackType}
@@ -210,22 +221,38 @@ const CommentComponentView = props => {
 
                         {/* <span className="dot" style={{ display: "inline" }} /> */}
                       </div>
+                      <div
+                        style={{
+                          marginLeft: "60px",
+                          marginBottom: "15px",
+                          fontStyle: "oblique",
+                          fontSize: "unset"
+                        }}
+                      >
+                        <p>{"Added response for above feedback:"}</p>
+                        {item.correspondingMessage.map(element => {
+                          return (
+                            <li style={{ marginLeft: "35px" }}>{element}</li>
+                          );
+                        })}
+                      </div>
                       <div>
-                        {/* {item.correspondingMessage.forEach(element => {
-                        console.log("inside the coresponding element", element);
-                        return <div>{element}</div>;
-                      })} */}
                         {props.open && props.keys === key ? (
                           <div className="card-body">
                             <textarea
+                              id="textArea"
                               rows="5"
                               cols="60"
                               placeholder="What is your Response?"
+                              onChange={e => {
+                                props.textArea(e);
+                              }}
                             />
                             <Button
                               variant="contained"
                               color="primary"
                               style={{ marginLeft: "-74%", marginTop: "10%" }}
+                              onClick={() => props.textAreaButton(key)}
                             >
                               Add Comment
                             </Button>
@@ -251,26 +278,35 @@ const CommentComponentView = props => {
                           style={{ top: "0px", left: "70%", display: "inline" }}
                         >
                           <input
+                            // className="custom-control-label"
+                            id="resolve"
+                            value={item.resolve}
                             type="checkbox"
-                            className="custom-control-input"
-                            // id="defaultCheckedResolve"
-                            checked={item.resolve}
+                            defaultChecked={item.resolve}
+                            onChange={e =>
+                              props.resolveButton(
+                                "resolve",
+                                { data: item.resolve },
+                                key
+                              )
+                            }
                           />
-                          <label
-                            className="custom-control-label"
-                            // for="defaultCheckedResolve"
-                          >
-                            Resolve
-                          </label>
+                          <label>Resolve</label>
                         </div>
                       </div>
                     </div>
                   );
                 })
-              ) : (
-                <div style={{ textAlign: "center" }}>
-                  {"No Feedbacks Found"}
+              ) : props.respSuccess ? (
+                <div
+                  className="spinner-border"
+                  style={{ marginLeft: "50%", marginTop: "10%" }}
+                  role="status"
+                >
+                  <span className="sr-only">Loading...</span>
                 </div>
+              ) : (
+                ""
               )}
             </p>
           </div>
