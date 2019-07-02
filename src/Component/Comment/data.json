@@ -1,0 +1,28 @@
+[
+    {
+        "name": "santosh",
+        "image": "xxxxxxxxxxxxxxxxxxxx",
+        "time": "10/02/1995",
+        "likes": 1,
+        "message": "hai team",
+        "correspondingMessage": [
+            "helloworld"
+        ],
+        "commentType": "Public comment",
+        "notify": "none",
+        "assignedPerson": "none",
+        "resolve": true
+    },
+    {
+        "name": "Yogi",
+        "image": "xxxxxxxxxxxxxxxxxxxx",
+        "time": "10/02/1995",
+        "likes": 0,
+        "message": "hai boys",
+        "correspondingMessage": [],
+        "commentType": "Team comment",
+        "notify": "none",
+        "assignedPerson": "none",
+        "resolve": false
+    }
+]
